@@ -77,6 +77,8 @@ class Fonts extends Base {
 		} catch (\Exception $e) {
 			$error = $e->getMessage();
 			$output->writeln("<error>$error</error>");
+			return 0;
 		}
+		return 1;
 	}
 }
