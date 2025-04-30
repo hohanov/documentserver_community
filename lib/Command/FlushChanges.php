@@ -77,8 +77,10 @@ class FlushChanges extends Base {
 						'Error while applying changes for document ' . $documentId, 
 						['exception' => $e, 'app' => 'documentserver_community']
 					);
+					return 0;
 				}
 			}
 		}
+		return 1;
 	}
 }
