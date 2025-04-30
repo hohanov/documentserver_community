@@ -26,37 +26,37 @@ namespace OCA\DocumentServer;
 use OC\AppFramework\Http;
 use OCP\AppFramework\Http\Response;
 
-class XMLResponse extends Response {
 
-	/**
-	 * response data
-	 *
-	 * @var array|object
-	 */
-	protected $data;
+class JSONResponse extends Response {
 
-	public function __construct($data = [], $statusCode = Http::STATUS_OK) {
-		parent::__construct();
+    /**
+     * response data
+     *
+     * @var array|object
+     */
+    protected $data;
 
-		$this->data = $data;
-		$this->setStatus($statusCode);
-		$this->addHeader('Content-Type', 'application/xml; charset=utf-8');
-	}
+    public function __construct($data = [], $statusCode = Http::STATUS_OK) {
+        parent::__construct();
 
-	public function render() {
-		$xml = new \SimpleXMLElement('<root/>');
-		$data = array_flip($this->data);
-		array_walk_recursive($data, [$xml, 'addChild']);
-		return $xml->asXML();
-	}
+        $this->data = $data;
+        $this->setStatus($statusCode);
+        $this->addHeader('Content-Type', 'application/json; charset=utf-8');
+    }
 
-	public function setData($data) {
-		$this->data = $data;
+    public function render() {
+        // Convert the data to JSON format and return it
+        $data = array_flip($this->data);
+        return json_encode($this->data);
+    }
 
-		return $this;
-	}
+    public function setData($data) {
+        $this->data = $data;
 
-	public function getData() {
-		return $this->data;
-	}
+        return $this;
+    }
+
+    public function getData() {
+        return $this->data;
+    }
 }
